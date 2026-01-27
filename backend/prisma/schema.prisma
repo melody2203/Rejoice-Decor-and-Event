@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PARTIAL
+  FULL
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+  bookings  Booking[]
+}
+
+model Profile {
+  id      String @id @default(uuid())
+  userId  String @unique
+  user    User   @relation(fields: [userId], references: [id])
+  phone   String?
+  address String?
+}
+
+model EventCategory {
+  id          String          @id @default(uuid())
+  name        String          @unique // Wedding, Birthday, etc.
+  slug        String          @unique
+  description String?
+  imageUrl    String?
+  pastWorks   PastWork[]
+  items       InventoryItem[]
+}
+
+model PastWork {
+  id          String        @id @default(uuid())
+  title       String
+  description String?
+  categoryId  String
+  category    EventCategory @relation(fields: [categoryId], references: [id])
+  imageUrls   String[]      // Array of images from Cloudinary
+  eventDate   DateTime
+  createdAt   DateTime      @default(now())
+}
+
+model InventoryItem {
+  id           String        @id @default(uuid())
+  name         String
+  description  String?
+  totalStock   Int
+  pricePerDay  Decimal
+  categoryId   String
+  category     EventCategory @relation(fields: [categoryId], references: [id])
+  imageUrl     String?
+  bookingItems BookingItem[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Booking {
+  id          String        @id @default(uuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  startDate   DateTime
+  endDate     DateTime
+  status      BookingStatus @default(PENDING)
+  totalAmount Decimal
+  items       BookingItem[]
+  payments    Payment[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model BookingItem {
+  id        String        @id @default(uuid())
+  bookingId String
+  booking   Booking       @relation(fields: [bookingId], references: [id])
+  itemId    String
+  item      InventoryItem @relation(fields: [itemId], references: [id])
+  quantity  Int
+}
+
+model Payment {
+  id               String        @id @default(uuid())
+  bookingId        String
+  booking          Booking       @relation(fields: [bookingId], references: [id])
+  amount           Decimal
+  status           PaymentStatus
+  stripePaymentId String?       @unique
+  createdAt        DateTime      @default(now())
+}
