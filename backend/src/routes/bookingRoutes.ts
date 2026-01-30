@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createBooking, getMyBookings, getAllBookings, createPaymentIntent, handleStripeWebhook } from '../controllers/bookingController';
+import { createBooking, getMyBookings, getAllBookings, createPaymentIntent, handleStripeWebhook, updateBookingStatus } from '../controllers/bookingController';
 import express from 'express';
 import { authenticateJWT, authorizeAdmin } from '../middleware/authMiddleware';
 
@@ -15,5 +15,6 @@ router.post('/', createBooking);
 router.post('/create-intent', createPaymentIntent);
 router.get('/my-bookings', getMyBookings);
 router.get('/', authorizeAdmin, getAllBookings);
+router.patch('/:id/status', authorizeAdmin, updateBookingStatus);
 
 export default router;

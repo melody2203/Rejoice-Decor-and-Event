@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AdminSidebar } from "@/components/layout/AdminSidebar";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminLayout({
     children,
@@ -21,10 +22,10 @@ export default function AdminLayout({
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-black">
+            <div className="flex items-center justify-center min-h-screen bg-[#0A0A0A]">
                 <div className="text-gold-500 text-xl animate-pulse font-serif uppercase tracking-widest flex items-center gap-3">
                     <div className="w-3 h-3 bg-gold-500 rounded-full animate-ping" />
-                    Loading Admin Console...
+                    Refining Console...
                 </div>
             </div>
         );
@@ -35,11 +36,21 @@ export default function AdminLayout({
     }
 
     return (
-        <div className="flex min-h-screen bg-black text-white">
+        <div className="flex min-h-screen bg-[#0A0A0A] text-white overflow-hidden">
             <AdminSidebar />
-            <main className="flex-1 p-8 overflow-y-auto">
+            <main className="flex-1 p-8 md:p-12 overflow-y-auto custom-scrollbar">
                 <div className="max-w-6xl mx-auto">
-                    {children}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key="admin-view"
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -15 }}
+                            transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+                        >
+                            {children}
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </main>
         </div>
