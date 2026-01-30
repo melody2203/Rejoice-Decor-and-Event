@@ -9,16 +9,21 @@
 - [x] Create implementation plan
 
 ## Execution
+- [ ] Phase 1: MVP Foundation [/]
+    - [x] Finalize Prisma schema
+    - [x] Implement Authentication (JWT)
+    - [ ] Create Admin CRUD for Categories and Past Works [/]
+    - [x] Display "Past Works" gallery on the frontend
 - [ ] Update Backend
-    - [ ] Finalize Prisma schema
-    - [ ] Implement Authentication (JWT)
+    - [x] Implement Admin-only CRUD routes for Portfolio
     - [ ] Implement Booking system logic
     - [ ] Implement Inventory/Decor rental logic
     - [ ] Integrate Stripe for payments
     - [ ] Integrate Cloudinary for media storage
 - [ ] Update Frontend
-    - [ ] Setup core UI components
-    - [ ] Implement browse past works by category
+    - [x] Setup core UI components
+    - [x] Implement browse past works by category
+    - [ ] Implement Admin CRUD UI
     - [ ] Implement booking and rental UI
     - [ ] Implement user dashboard
     - [ ] Implement admin dashboard

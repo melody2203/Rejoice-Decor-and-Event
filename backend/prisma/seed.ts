@@ -1,9 +1,29 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
     console.log('Start seeding...');
+
+    // Admin user
+    const adminPassword = await bcrypt.hash('admin123', 10);
+    const admin = await prisma.user.upsert({
+        where: { email: 'admin@rejoice.com' },
+        update: {},
+        create: {
+            email: 'admin@rejoice.com',
+            password: adminPassword,
+            role: 'ADMIN',
+            profile: {
+                create: {
+                    phone: '1234567890',
+                    address: 'Rejoice HQ'
+                }
+            }
+        },
+    });
+    console.log('Admin user created/updated:', admin.email);
 
     const categories = [
         { name: 'Wedding', slug: 'wedding', description: 'Elegant and luxurious wedding flower and decor' },
