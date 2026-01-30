@@ -12,7 +12,7 @@
 - [ ] Phase 1: MVP Foundation [/]
     - [x] Finalize Prisma schema
     - [x] Implement Authentication (JWT)
-    - [ ] Create Admin CRUD for Categories and Past Works [/]
+    - [x] Create Admin CRUD for Categories and Past Works [/]
     - [x] Display "Past Works" gallery on the frontend
 - [ ] Update Backend
     - [x] Implement Admin-only CRUD routes for Portfolio
@@ -23,10 +23,10 @@
 - [ ] Update Frontend
     - [x] Setup core UI components
     - [x] Implement browse past works by category
-    - [ ] Implement Admin CRUD UI
+    - [x] Implement Admin CRUD UI
     - [ ] Implement booking and rental UI
     - [ ] Implement user dashboard
-    - [ ] Implement admin dashboard
+    - [x] Implement admin dashboard [/]
 
 ## Verification
 - [ ] Test authentication flow

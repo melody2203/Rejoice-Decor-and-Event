@@ -1,5 +1,87 @@
 import { Request, Response } from 'express';
 import prisma from '../prisma/client';
+import { checkItemAvailability } from '../services/bookingService';
+import { createPaymentIntent as stripeCreateIntent, stripeInstance } from '../services/stripeService';
+
+export const handleStripeWebhook = async (req: Request, res: Response) => {
+    const sig = req.headers['stripe-signature'];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    let event;
+
+    try {
+        if (!sig || !webhookSecret) {
+            throw new Error('Missing stripe signature or webhook secret');
+        }
+        event = stripeInstance.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err: any) {
+        console.error('Webhook signature verification failed:', err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === 'payment_intent.succeeded') {
+        const paymentIntent = event.data.object as any;
+        const bookingId = paymentIntent.metadata.bookingId;
+
+        try {
+            await prisma.$transaction([
+                // 1. Update booking status
+                prisma.booking.update({
+                    where: { id: bookingId },
+                    data: { status: 'CONFIRMED' }
+                }),
+                // 2. Create payment record
+                prisma.payment.create({
+                    data: {
+                        bookingId,
+                        amount: paymentIntent.amount / 100,
+                        status: 'FULL',
+                        stripePaymentId: paymentIntent.id
+                    }
+                })
+            ]);
+            console.log(`Booking ${bookingId} confirmed via Stripe.`);
+        } catch (error) {
+            console.error('Error updating booking after payment:', error);
+            return res.status(500).json({ error: 'Failed to update booking' });
+        }
+    }
+
+    res.json({ received: true });
+};
+
+export const createPaymentIntent = async (req: Request, res: Response) => {
+    try {
+        const { bookingId } = req.body;
+        const user = (req as any).user;
+
+        const booking = await prisma.booking.findUnique({
+            where: { id: bookingId },
+            include: { user: true }
+        });
+
+        if (!booking) {
+            return res.status(404).json({ error: 'Booking not found' });
+        }
+
+        if (booking.userId !== user.userId && user.role !== 'ADMIN') {
+            return res.status(403).json({ error: 'Unauthorized' });
+        }
+
+        const paymentIntent = await stripeCreateIntent(
+            parseFloat(booking.totalAmount.toString()),
+            booking.id,
+            booking.user.email
+        );
+
+        res.json({
+            clientSecret: paymentIntent.client_secret,
+            paymentIntentId: paymentIntent.id
+        });
+    } catch (error: any) {
+        res.status(500).json({ error: error.message || 'Failed to create payment intent' });
+    }
+};
 
 export const createBooking = async (req: Request, res: Response) => {
     try {
@@ -10,7 +92,34 @@ export const createBooking = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'Missing booking details' });
         }
 
-        // Calculate total amount (Simplified for MVP)
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start < new Date()) {
+            return res.status(400).json({ error: 'Start date cannot be in the past' });
+        }
+
+        if (end < start) {
+            return res.status(400).json({ error: 'End date must be after start date' });
+        }
+
+        // 1. Check availability for all items first
+        for (const item of items) {
+            const availability = await checkItemAvailability(
+                item.itemId,
+                item.quantity,
+                start,
+                end
+            );
+
+            if (!availability.isAvailable) {
+                return res.status(400).json({
+                    error: `Insufficient stock for item ${item.itemId}. Available: ${availability.availableStock}`
+                });
+            }
+        }
+
+        // 2. Calculate total amount and prepare data
         let totalAmount = 0;
         const bookingItemsData = [];
 
@@ -24,7 +133,10 @@ export const createBooking = async (req: Request, res: Response) => {
             }
 
             const itemPrice = parseFloat(inventoryItem.pricePerDay.toString());
-            totalAmount += itemPrice * item.quantity;
+            const diffTime = Math.abs(end.getTime() - start.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+
+            totalAmount += itemPrice * item.quantity * diffDays;
 
             bookingItemsData.push({
                 itemId: item.itemId,
@@ -35,8 +147,8 @@ export const createBooking = async (req: Request, res: Response) => {
         const booking = await prisma.booking.create({
             data: {
                 userId,
-                startDate: new Date(startDate),
-                endDate: new Date(endDate),
+                startDate: start,
+                endDate: end,
                 totalAmount,
                 status: 'PENDING',
                 items: {
@@ -53,9 +165,9 @@ export const createBooking = async (req: Request, res: Response) => {
         });
 
         res.status(201).json(booking);
-    } catch (error) {
+    } catch (error: any) {
         console.error('Booking creation error:', error);
-        res.status(500).json({ error: 'Failed to create booking' });
+        res.status(500).json({ error: error.message || 'Failed to create booking' });
     }
 };
 

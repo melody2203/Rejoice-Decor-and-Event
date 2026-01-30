@@ -6,10 +6,23 @@ import { useCart } from '@/hooks/useCart';
 import { useAuth } from '@/hooks/useAuth';
 import api from '@/lib/api';
 import Button from '@/components/ui/Button';
-import { Calendar, CreditCard, ChevronLeft, Success } from 'lucide-react';
+import { Calendar, CreditCard, ChevronLeft, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import PaymentForm from '@/components/sections/PaymentForm';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
 export default function CheckoutPage() {
+    return (
+        <Elements stripe={stripePromise}>
+            <CheckoutContent />
+        </Elements>
+    );
+}
+
+function CheckoutContent() {
     const { items, total, clearCart } = useCart();
     const { user } = useAuth();
     const router = useRouter();
@@ -19,8 +32,10 @@ export default function CheckoutPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
+    const [bookingId, setBookingId] = useState<string | null>(null);
+    const [clientSecret, setClientSecret] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleCreateBooking = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return router.push('/login');
         if (!startDate || !endDate) return setError('Please select event dates');
@@ -38,9 +53,13 @@ export default function CheckoutPage() {
                 }))
             };
 
-            await api.post('/bookings', bookingData);
-            setIsSuccess(true);
-            clearCart();
+            const res = await api.post('/bookings', bookingData);
+            const booking = res.data;
+            setBookingId(booking.id);
+
+            // Create Payment Intent
+            const intentRes = await api.post('/bookings/create-intent', { bookingId: booking.id });
+            setClientSecret(intentRes.data.clientSecret);
         } catch (err: any) {
             setError(err.response?.data?.error || 'Failed to submit booking request.');
         } finally {
@@ -165,15 +184,33 @@ export default function CheckoutPage() {
 
                             {error && <p className="text-red-500 text-xs text-center mb-4">{error}</p>}
 
-                            <Button
-                                className="w-full py-5 rounded-3xl"
-                                variant="gold"
-                                loading={isLoading}
-                                onClick={handleSubmit}
-                                disabled={items.length === 0}
-                            >
-                                REQUEST BOOKING
-                            </Button>
+                            {clientSecret ? (
+                                <div className="space-y-6">
+                                    <div className="p-4 bg-zinc-900 rounded-2xl border border-zinc-800">
+                                        <p className="text-[10px] uppercase tracking-widest text-gold-500 mb-2">Secure Payment Required</p>
+                                        <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                            <PaymentForm
+                                                bookingId={bookingId!}
+                                                onSuccess={() => {
+                                                    setIsSuccess(true);
+                                                    clearCart();
+                                                }}
+                                                onError={(msg) => setError(msg)}
+                                            />
+                                        </Elements>
+                                    </div>
+                                </div>
+                            ) : (
+                                <Button
+                                    className="w-full py-5 rounded-3xl"
+                                    variant="gold"
+                                    loading={isLoading}
+                                    onClick={handleCreateBooking}
+                                    disabled={items.length === 0}
+                                >
+                                    PROCEED TO PAYMENT
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,15 @@ const app: Express = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+
+// Special handling for Stripe Webhooks to use raw body
+app.use((req, res, next) => {
+    if (req.originalUrl === '/api/bookings/webhook') {
+        next();
+    } else {
+        express.json()(req, res, next);
+    }
+});
 
 app.use('/api', routes);
 

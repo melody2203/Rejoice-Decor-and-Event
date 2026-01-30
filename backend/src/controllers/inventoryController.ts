@@ -3,10 +3,10 @@ import prisma from '../prisma/client';
 
 export const getInventoryItems = async (req: Request, res: Response) => {
     try {
-        const { categoryId } = req.query;
+        const categoryId = req.query.categoryId as string | undefined;
 
         const items = await prisma.inventoryItem.findMany({
-            where: categoryId ? { categoryId: categoryId as string } : {},
+            where: categoryId ? { categoryId } : {},
             include: {
                 category: true
             },
@@ -25,7 +25,7 @@ export const getInventoryItemById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const item = await prisma.inventoryItem.findUnique({
-            where: { id },
+            where: { id: id as string },
             include: { category: true }
         });
 
@@ -57,5 +57,40 @@ export const createInventoryItem = async (req: Request, res: Response) => {
         res.status(201).json(item);
     } catch (error) {
         res.status(500).json({ error: 'Failed to create inventory item' });
+    }
+};
+
+export const updateInventoryItem = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { name, description, totalStock, pricePerDay, categoryId, imageUrl } = req.body;
+
+        const item = await prisma.inventoryItem.update({
+            where: { id: id as string },
+            data: {
+                name,
+                description,
+                totalStock: totalStock ? parseInt(totalStock) : undefined,
+                pricePerDay: pricePerDay ? parseFloat(pricePerDay) : undefined,
+                categoryId,
+                imageUrl
+            }
+        });
+
+        res.json(item);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update inventory item' });
+    }
+};
+
+export const deleteInventoryItem = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        await prisma.inventoryItem.delete({
+            where: { id: id as string }
+        });
+        res.json({ message: 'Inventory item deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete inventory item' });
     }
 };
