@@ -22,7 +22,8 @@ interface Project {
     };
 }
 
-export default function PortfolioPage() {
+// Separate component for client-side logic using useSearchParams
+function PortfolioContent() {
     const searchParams = useSearchParams();
     const initialCategory = searchParams.get('category') || 'all';
 
@@ -44,8 +45,8 @@ export default function PortfolioPage() {
                 setProjects(apiProjects);
 
                 // Add hardcoded categories if not present (fallback for UI filtering)
-                const apiCategories = catRes.data || [];
-                const hardcodedCategories = [
+                const catResData: Category[] = catRes.data || [];
+                const hardcodedCategories: Category[] = [
                     { id: 'wedding-cat', name: 'Wedding', slug: 'wedding' },
                     { id: 'birthday-cat', name: 'Birthday', slug: 'birthday' },
                     { id: 'graduation-cat', name: 'Graduation', slug: 'graduation' },
@@ -53,7 +54,7 @@ export default function PortfolioPage() {
                     { id: 'corporate-cat', name: 'Corporate', slug: 'corporate' }
                 ];
 
-                const combinedCategories = [...apiCategories];
+                const combinedCategories = [...catResData];
                 hardcodedCategories.forEach(hCat => {
                     if (!combinedCategories.some(cat => cat.slug === hCat.slug)) {
                         combinedCategories.unshift(hCat);
@@ -166,5 +167,17 @@ export default function PortfolioPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function PortfolioPage() {
+    return (
+        <React.Suspense fallback={
+            <div className="pt-32 pb-20 text-center">
+                <p className="text-gray-500 font-serif italic text-xl">Loading gallery...</p>
+            </div>
+        }>
+            <PortfolioContent />
+        </React.Suspense>
     );
 }
