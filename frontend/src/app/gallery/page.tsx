@@ -37,70 +37,56 @@ export default function PortfolioPage() {
             id: 'wedding-1',
             title: 'Wedding',
             description: 'Grand Ballroom Wedding',
-            imageUrls: ['/images/gallery/weddings/Wedding_1.jpg'],
+            imageUrls: ['/images/gallery/wedding/Wedding_1.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-2',
             title: 'Wedding',
             description: 'Romantic Candlelit Ceremony',
-            imageUrls: ['/images/gallery/weddings/wedding_2.jpg'],
+            imageUrls: ['/images/gallery/wedding/wedding_2.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-3',
             title: 'Wedding',
             description: 'Elegant White Stage',
-            imageUrls: ['/images/gallery/weddings/wedding_3.jpg'],
+            imageUrls: ['/images/gallery/wedding/wedding_3.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-4',
             title: 'Wedding',
             description: 'Luxury Pink Floral',
-            imageUrls: ['/images/gallery/weddings/wedding_4.jpg'],
+            imageUrls: ['/images/gallery/wedding/Wedding_4.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-5',
             title: 'Wedding',
             description: 'Forever Begins Tonight',
-            imageUrls: ['/images/gallery/weddings/wedding_5.jpg'],
+            imageUrls: ['/images/gallery/wedding/wedding_5.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-6',
             title: 'Wedding',
             description: 'Classic Wedding Elegance',
-            imageUrls: ['/images/gallery/weddings/Wedding_6.jpg'],
+            imageUrls: ['/images/gallery/wedding/Wedding_6.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-7',
             title: 'Wedding',
             description: 'Dreamy Wedding Reception',
-            imageUrls: ['/images/gallery/weddings/Wedding_7.jpg'],
+            imageUrls: ['/images/gallery/wedding/Wedding_7.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         },
         {
             id: 'wedding-8',
             title: 'Wedding',
             description: 'Royal Wedding Ceremony',
-            imageUrls: ['/images/gallery/weddings/Wedding_8.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-9',
-            title: 'Wedding',
-            description: 'Garden Wedding Paradise',
-            imageUrls: ['/images/gallery/weddings/Wedding_9.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-10',
-            title: 'Wedding',
-            description: 'Modern Wedding Glamour',
-            imageUrls: ['/images/gallery/weddings/Wedding_10.jpg'],
+            imageUrls: ['/images/gallery/wedding/Wedding_8.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
         }
     ];
@@ -111,49 +97,28 @@ export default function PortfolioPage() {
             id: 'birthday-1',
             title: 'Birthday',
             description: 'Vibrant Birthday Decor',
-            imageUrls: ['/images/gallery/birthdays/Birthday_1.jpg'],
+            imageUrls: ['/images/gallery/birthday/Wedding_1.jpg'],
             category: { name: 'Birthday', slug: 'birthday' }
         },
         {
             id: 'birthday-2',
             title: 'Birthday',
             description: 'Creative Birthday Setup',
-            imageUrls: ['/images/gallery/birthdays/Birthday_2.jpg'],
+            imageUrls: ['/images/gallery/birthday/Wedding_2.jpg'],
             category: { name: 'Birthday', slug: 'birthday' }
         },
         {
             id: 'birthday-3',
             title: 'Birthday',
             description: 'Elegant Birthday Party',
-            imageUrls: ['/images/gallery/birthdays/Birthday_3.jpg'],
+            imageUrls: ['/images/gallery/birthday/Wedding_3.jpg'],
             category: { name: 'Birthday', slug: 'birthday' }
         },
         {
             id: 'birthday-4',
             title: 'Birthday',
             description: 'Themed Birthday Celebration',
-            imageUrls: ['/images/gallery/birthdays/Birthday_4.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-5',
-            title: 'Birthday',
-            description: 'Modern Birthday Style',
-            imageUrls: ['/images/gallery/birthdays/Birthday_5.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-6',
-            title: 'Birthday',
-            description: 'Classic Birthday Decor',
-            imageUrls: ['/images/gallery/birthdays/Birthday_6.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-7',
-            title: 'Birthday',
-            description: 'Grand Birthday Celebration',
-            imageUrls: ['/images/gallery/birthdays/Birthday_7.jpg'],
+            imageUrls: ['/images/gallery/birthday/Wedding_4.jpg'],
             category: { name: 'Birthday', slug: 'birthday' }
         }
     ];
@@ -164,42 +129,28 @@ export default function PortfolioPage() {
             id: 'grad-1',
             title: 'Graduation',
             description: 'Stunning Graduation Stage',
-            imageUrls: ['/images/gallery/graduations/Grad_1.jpg'],
+            imageUrls: ['/images/gallery/graduation/Grad_1.jpg'],
             category: { name: 'Graduation', slug: 'graduation' }
         },
         {
             id: 'grad-2',
             title: 'Graduation',
             description: 'Elegant Graduation Decor',
-            imageUrls: ['/images/gallery/graduations/Grad_2.jpg'],
+            imageUrls: ['/images/gallery/graduation/Grad_2.jpg'],
             category: { name: 'Graduation', slug: 'graduation' }
         },
         {
             id: 'grad-3',
             title: 'Graduation',
             description: 'Classy Graduation Setup',
-            imageUrls: ['/images/gallery/graduations/Grad_3.jpg'],
+            imageUrls: ['/images/gallery/graduation/Grad_3.jpg'],
             category: { name: 'Graduation', slug: 'graduation' }
         },
         {
             id: 'grad-4',
             title: 'Graduation',
             description: 'Modern Graduation Style',
-            imageUrls: ['/images/gallery/graduations/Grad_4.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        },
-        {
-            id: 'grad-5',
-            title: 'Graduation',
-            description: 'Traditional Graduation Decor',
-            imageUrls: ['/images/gallery/graduations/Grad_5.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        },
-        {
-            id: 'grad-6',
-            title: 'Graduation',
-            description: 'Grand Graduation Stage',
-            imageUrls: ['/images/gallery/graduations/Grad_6.jpg'],
+            imageUrls: ['/images/gallery/graduation/Grad_4.jpg'],
             category: { name: 'Graduation', slug: 'graduation' }
         }
     ];
@@ -210,35 +161,28 @@ export default function PortfolioPage() {
             id: 'eng-1',
             title: 'Engagement',
             description: 'Romantic Engagement Backdrop',
-            imageUrls: ['/images/gallery/engagements/Engagement_1.jpg'],
+            imageUrls: ['/images/gallery/engagement/Engagement_1.jpg'],
             category: { name: 'Engagement', slug: 'engagement' }
         },
         {
             id: 'eng-2',
             title: 'Engagement',
             description: 'Luxury Engagement Setup',
-            imageUrls: ['/images/gallery/engagements/Engagement_2.jpg'],
+            imageUrls: ['/images/gallery/engagement/Engagement_2.jpg'],
             category: { name: 'Engagement', slug: 'engagement' }
         },
         {
             id: 'eng-3',
             title: 'Engagement',
             description: 'Elegant Engagement Decor',
-            imageUrls: ['/images/gallery/engagements/Engagement_3.jpg'],
+            imageUrls: ['/images/gallery/engagement/Engagement_3.jpg'],
             category: { name: 'Engagement', slug: 'engagement' }
         },
         {
             id: 'eng-4',
             title: 'Engagement',
             description: 'Traditional Engagement Style',
-            imageUrls: ['/images/gallery/engagements/Engagement_4.jpg'],
-            category: { name: 'Engagement', slug: 'engagement' }
-        },
-        {
-            id: 'eng-5',
-            title: 'Engagement',
-            description: 'Classic Engagement Setup',
-            imageUrls: ['/images/gallery/engagements/Engagement_5.jpg'],
+            imageUrls: ['/images/gallery/engagement/Engagement_4.jpg'],
             category: { name: 'Engagement', slug: 'engagement' }
         }
     ];
@@ -271,7 +215,11 @@ export default function PortfolioPage() {
                     }
                 });
 
-                setCategories(combinedCategories);
+                // Filter to only include the main 4 categories
+                const allowedCategories = ['wedding', 'birthday', 'graduation', 'engagement'];
+                const filteredCategories = combinedCategories.filter(cat => allowedCategories.includes(cat.slug));
+
+                setCategories(filteredCategories);
             } catch (err) {
                 console.error('Failed to fetch portfolio data', err);
                 // If API fails, use only hardcoded projects

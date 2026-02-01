@@ -18,6 +18,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder'
  * @param customerEmail Customer's email
  */
 export const createPaymentIntent = async (amount: number, bookingId: string, customerEmail: string) => {
+    // Check if we are using a placeholder key (Development Mode)
+    const isTestMode = !process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY.startsWith('sk_test_placeholder') || process.env.STRIPE_SECRET_KEY.includes('...');
+
+    if (isTestMode) {
+        console.log('DEV MODE: Returning mock payment intent for booking', bookingId);
+        return {
+            id: 'pi_mock_' + Math.random().toString(36).substring(7),
+            client_secret: 'mock_secret',
+            status: 'requires_payment_method',
+        } as any;
+    }
+
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: Math.round(amount * 100), // Stripe expects amounts in cents

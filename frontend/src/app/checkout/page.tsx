@@ -188,16 +188,35 @@ function CheckoutContent() {
                                 <div className="space-y-6">
                                     <div className="p-4 bg-zinc-900 rounded-2xl border border-zinc-800">
                                         <p className="text-[10px] uppercase tracking-widest text-gold-500 mb-2">Secure Payment Required</p>
-                                        <Elements stripe={stripePromise} options={{ clientSecret }}>
-                                            <PaymentForm
-                                                bookingId={bookingId!}
-                                                onSuccess={() => {
-                                                    setIsSuccess(true);
-                                                    clearCart();
-                                                }}
-                                                onError={(msg) => setError(msg)}
-                                            />
-                                        </Elements>
+
+                                        {clientSecret === 'mock_secret' ? (
+                                            <div className="space-y-4">
+                                                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-500 text-xs">
+                                                    <strong>Development Mode:</strong> Payment is bypassed.
+                                                </div>
+                                                <Button
+                                                    className="w-full py-3"
+                                                    variant="gold"
+                                                    onClick={() => {
+                                                        setIsSuccess(true);
+                                                        clearCart();
+                                                    }}
+                                                >
+                                                    Simulate Successful Payment
+                                                </Button>
+                                            </div>
+                                        ) : (
+                                            <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                                <PaymentForm
+                                                    bookingId={bookingId!}
+                                                    onSuccess={() => {
+                                                        setIsSuccess(true);
+                                                        clearCart();
+                                                    }}
+                                                    onError={(msg) => setError(msg)}
+                                                />
+                                            </Elements>
+                                        )}
                                     </div>
                                 </div>
                             ) : (
