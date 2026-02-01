@@ -31,162 +31,6 @@ export default function PortfolioPage() {
     const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
     const [loading, setLoading] = useState(true);
 
-    // Hardcoded wedding projects
-    const weddingProjects: Project[] = [
-        {
-            id: 'wedding-1',
-            title: 'Wedding',
-            description: 'Grand Ballroom Wedding',
-            imageUrls: ['/images/gallery/wedding/Wedding_1.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-2',
-            title: 'Wedding',
-            description: 'Romantic Candlelit Ceremony',
-            imageUrls: ['/images/gallery/wedding/wedding_2.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-3',
-            title: 'Wedding',
-            description: 'Elegant White Stage',
-            imageUrls: ['/images/gallery/wedding/wedding_3.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-4',
-            title: 'Wedding',
-            description: 'Luxury Pink Floral',
-            imageUrls: ['/images/gallery/wedding/Wedding_4.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-5',
-            title: 'Wedding',
-            description: 'Forever Begins Tonight',
-            imageUrls: ['/images/gallery/wedding/wedding_5.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-6',
-            title: 'Wedding',
-            description: 'Classic Wedding Elegance',
-            imageUrls: ['/images/gallery/wedding/Wedding_6.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-7',
-            title: 'Wedding',
-            description: 'Dreamy Wedding Reception',
-            imageUrls: ['/images/gallery/wedding/Wedding_7.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-8',
-            title: 'Wedding',
-            description: 'Royal Wedding Ceremony',
-            imageUrls: ['/images/gallery/wedding/Wedding_8.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        }
-    ];
-
-    // Hardcoded birthday projects
-    const birthdayProjects: Project[] = [
-        {
-            id: 'birthday-1',
-            title: 'Birthday',
-            description: 'Vibrant Birthday Decor',
-            imageUrls: ['/images/gallery/birthday/Wedding_1.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-2',
-            title: 'Birthday',
-            description: 'Creative Birthday Setup',
-            imageUrls: ['/images/gallery/birthday/Wedding_2.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-3',
-            title: 'Birthday',
-            description: 'Elegant Birthday Party',
-            imageUrls: ['/images/gallery/birthday/Wedding_3.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-4',
-            title: 'Birthday',
-            description: 'Themed Birthday Celebration',
-            imageUrls: ['/images/gallery/birthday/Wedding_4.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        }
-    ];
-
-    // Hardcoded graduation projects
-    const graduationProjects: Project[] = [
-        {
-            id: 'grad-1',
-            title: 'Graduation',
-            description: 'Stunning Graduation Stage',
-            imageUrls: ['/images/gallery/graduation/Grad_1.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        },
-        {
-            id: 'grad-2',
-            title: 'Graduation',
-            description: 'Elegant Graduation Decor',
-            imageUrls: ['/images/gallery/graduation/Grad_2.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        },
-        {
-            id: 'grad-3',
-            title: 'Graduation',
-            description: 'Classy Graduation Setup',
-            imageUrls: ['/images/gallery/graduation/Grad_3.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        },
-        {
-            id: 'grad-4',
-            title: 'Graduation',
-            description: 'Modern Graduation Style',
-            imageUrls: ['/images/gallery/graduation/Grad_4.jpg'],
-            category: { name: 'Graduation', slug: 'graduation' }
-        }
-    ];
-
-    // Hardcoded engagement projects
-    const engagementProjects: Project[] = [
-        {
-            id: 'eng-1',
-            title: 'Engagement',
-            description: 'Romantic Engagement Backdrop',
-            imageUrls: ['/images/gallery/engagement/Engagement_1.jpg'],
-            category: { name: 'Engagement', slug: 'engagement' }
-        },
-        {
-            id: 'eng-2',
-            title: 'Engagement',
-            description: 'Luxury Engagement Setup',
-            imageUrls: ['/images/gallery/engagement/Engagement_2.jpg'],
-            category: { name: 'Engagement', slug: 'engagement' }
-        },
-        {
-            id: 'eng-3',
-            title: 'Engagement',
-            description: 'Elegant Engagement Decor',
-            imageUrls: ['/images/gallery/engagement/Engagement_3.jpg'],
-            category: { name: 'Engagement', slug: 'engagement' }
-        },
-        {
-            id: 'eng-4',
-            title: 'Engagement',
-            description: 'Traditional Engagement Style',
-            imageUrls: ['/images/gallery/engagement/Engagement_4.jpg'],
-            category: { name: 'Engagement', slug: 'engagement' }
-        }
-    ];
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -194,18 +38,19 @@ export default function PortfolioPage() {
                     api.get('/portfolio/projects'),
                     api.get('/portfolio/categories')
                 ]);
-                // Combine hardcoded projects with API data
-                const apiProjects = projRes.data || [];
-                const allProjects = [...weddingProjects, ...birthdayProjects, ...graduationProjects, ...engagementProjects, ...apiProjects];
-                setProjects(allProjects);
 
-                // Add hardcoded categories if not present
+                // Use API data directly
+                const apiProjects = projRes.data || [];
+                setProjects(apiProjects);
+
+                // Add hardcoded categories if not present (fallback for UI filtering)
                 const apiCategories = catRes.data || [];
                 const hardcodedCategories = [
                     { id: 'wedding-cat', name: 'Wedding', slug: 'wedding' },
                     { id: 'birthday-cat', name: 'Birthday', slug: 'birthday' },
                     { id: 'graduation-cat', name: 'Graduation', slug: 'graduation' },
-                    { id: 'engagement-cat', name: 'Engagement', slug: 'engagement' }
+                    { id: 'engagement-cat', name: 'Engagement', slug: 'engagement' },
+                    { id: 'corporate-cat', name: 'Corporate', slug: 'corporate' }
                 ];
 
                 const combinedCategories = [...apiCategories];
@@ -215,21 +60,14 @@ export default function PortfolioPage() {
                     }
                 });
 
-                // Filter to only include the main 4 categories
-                const allowedCategories = ['wedding', 'birthday', 'graduation', 'engagement'];
+                // Filter to include corporate as well
+                const allowedCategories = ['wedding', 'birthday', 'graduation', 'engagement', 'corporate'];
                 const filteredCategories = combinedCategories.filter(cat => allowedCategories.includes(cat.slug));
 
                 setCategories(filteredCategories);
             } catch (err) {
                 console.error('Failed to fetch portfolio data', err);
-                // If API fails, use only hardcoded projects
-                setProjects([...weddingProjects, ...birthdayProjects, ...graduationProjects, ...engagementProjects]);
-                setCategories([
-                    { id: 'wedding-cat', name: 'Wedding', slug: 'wedding' },
-                    { id: 'birthday-cat', name: 'Birthday', slug: 'birthday' },
-                    { id: 'graduation-cat', name: 'Graduation', slug: 'graduation' },
-                    { id: 'engagement-cat', name: 'Engagement', slug: 'engagement' }
-                ]);
+                setProjects([]); // Fallback to empty or maybe handled differently if needed
             } finally {
                 setLoading(false);
             }
