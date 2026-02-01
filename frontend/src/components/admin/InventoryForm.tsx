@@ -89,7 +89,7 @@ export function InventoryForm({ initialData, onSubmit, onClose }: InventoryFormP
                             </div>
                         </div>
                         <div>
-                            <label className="block text-xs font-bold uppercase tracking-widest text-gold-500/80 mb-1 ml-1">Price / Day</label>
+                            <label className="block text-xs font-bold uppercase tracking-widest text-gold-500/80 mb-1 ml-1">Price / Day (Birr)</label>
                             <div className="relative">
                                 <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
                                 <input

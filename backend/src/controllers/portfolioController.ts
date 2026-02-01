@@ -6,8 +6,11 @@ export const getCategories = async (req: Request, res: Response) => {
         const categories = await prisma.eventCategory.findMany({
             include: {
                 _count: {
-                    select: { pastWorks: true, items: true }
+                    select: { pastWorks: true }
                 }
+            },
+            orderBy: {
+                order: 'asc'
             }
         });
         res.json(categories);
@@ -66,7 +69,7 @@ export const updateProject = async (req: Request, res: Response) => {
         const { title, description, categoryId, imageUrls, eventDate } = req.body;
 
         const project = await prisma.pastWork.update({
-            where: { id },
+            where: { id: id as string },
             data: {
                 title,
                 description,
@@ -85,7 +88,7 @@ export const updateProject = async (req: Request, res: Response) => {
 export const deleteProject = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        await prisma.pastWork.delete({ where: { id } });
+        await prisma.pastWork.delete({ where: { id: id as string } });
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete project' });
@@ -109,7 +112,7 @@ export const updateCategory = async (req: Request, res: Response) => {
         const { id } = req.params;
         const { name, slug, description, imageUrl } = req.body;
         const category = await prisma.eventCategory.update({
-            where: { id },
+            where: { id: id as string },
             data: { name, slug, description, imageUrl }
         });
         res.json(category);
@@ -121,7 +124,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 export const deleteCategory = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        await prisma.eventCategory.delete({ where: { id } });
+        await prisma.eventCategory.delete({ where: { id: id as string } });
         res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete category' });

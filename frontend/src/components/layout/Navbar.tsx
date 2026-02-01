@@ -11,9 +11,10 @@ import CartDrawer from './CartDrawer';
 
 const navLinks = [
     { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
     { name: 'Gallery', href: '/gallery' },
     { name: 'Rentals', href: '/rentals' },
-    { name: 'About', href: '/about' },
+    { name: 'Booking', href: '/booking' },
     { name: 'Contact', href: '/contact' },
 ];
 
@@ -45,7 +46,7 @@ const Navbar = () => {
                 <Link href="/" className="flex flex-col">
                     <span className={cn(
                         "text-2xl font-serif font-bold tracking-tight transition-colors",
-                        scrolled ? "text-burgundy-800" : "text-burgundy-950"
+                        scrolled ? "text-gold-700" : "text-gold-900"
                     )}>
                         REJOICE
                     </span>
@@ -60,7 +61,7 @@ const Navbar = () => {
                         <Link
                             key={link.name}
                             href={link.href}
-                            className="text-sm font-medium uppercase tracking-wider text-gray-700 hover:text-burgundy-700 transition-colors"
+                            className="text-sm font-medium uppercase tracking-wider text-gray-700 hover:text-gold-600 transition-colors"
                         >
                             {link.name}
                         </Link>
@@ -70,7 +71,7 @@ const Navbar = () => {
                         <div className="relative">
                             <button
                                 onClick={() => setShowUserMenu(!showUserMenu)}
-                                className="flex items-center gap-2 text-sm font-medium text-burgundy-900 border border-burgundy-100 px-4 py-2 rounded-full hover:bg-burgundy-50 transition-all"
+                                className="flex items-center gap-2 text-sm font-medium text-gold-900 border border-gold-100 px-4 py-2 rounded-full hover:bg-gold-50 transition-all"
                             >
                                 <UserIcon size={16} />
                                 <span className="max-w-[100px] truncate">{user.email.split('@')[0]}</span>
@@ -81,14 +82,14 @@ const Navbar = () => {
                                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl py-2 border border-gray-50 z-50">
                                     <div className="px-4 py-2 border-b border-gray-100 mb-1">
                                         <p className="text-[10px] text-gray-400 uppercase tracking-widest">Signed in as</p>
-                                        <p className="text-sm font-bold truncate text-burgundy-950">{user.email}</p>
+                                        <p className="text-sm font-bold truncate text-gold-900">{user.email}</p>
                                     </div>
                                     {user.role === 'ADMIN' && (
-                                        <Link href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-burgundy-50 hover:text-burgundy-800">
+                                        <Link href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gold-50 hover:text-gold-700">
                                             Admin Dashboard
                                         </Link>
                                     )}
-                                    <Link href="/bookings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-burgundy-50 hover:text-burgundy-800">
+                                    <Link href="/bookings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gold-50 hover:text-gold-700">
                                         My Bookings
                                     </Link>
                                     <button
@@ -103,18 +104,18 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <Link href="/login">
-                            <Button size="sm">Log In</Button>
+                            <Button size="sm" icon={UserIcon}>Log In</Button>
                         </Link>
                     )}
 
                     {/* Cart Trigger */}
                     <button
                         onClick={() => setIsCartOpen(true)}
-                        className="p-2 text-burgundy-900 hover:bg-burgundy-50 rounded-full transition-all relative"
+                        className="p-2 text-gold-900 hover:bg-gold-50 rounded-full transition-all relative"
                     >
                         <ShoppingBag size={22} />
                         {itemCount > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-gold-500 text-burgundy-950 text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm">
+                            <span className="absolute -top-1 -right-1 bg-gold-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-sm">
                                 {itemCount}
                             </span>
                         )}
@@ -123,11 +124,11 @@ const Navbar = () => {
 
                 {/* Mobile Toggle */}
                 <div className="md:hidden flex items-center space-x-4">
-                    <button onClick={() => setIsCartOpen(true)} className="text-burgundy-900 p-2 relative">
+                    <button onClick={() => setIsCartOpen(true)} className="text-gold-900 p-2 relative">
                         <ShoppingBag size={22} />
                         {itemCount > 0 && <span className="absolute top-1 right-1 bg-gold-500 w-2 h-2 rounded-full" />}
                     </button>
-                    <button onClick={() => setIsOpen(!isOpen)} className="text-burgundy-900 p-2">
+                    <button onClick={() => setIsOpen(!isOpen)} className="text-gold-900 p-2">
                         {isOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
@@ -148,6 +149,11 @@ const Navbar = () => {
                     ))}
                     {user ? (
                         <>
+                            {user.role === 'ADMIN' && (
+                                <Link href="/admin" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-800 border-b border-gray-100 pb-2">
+                                    Admin Dashboard
+                                </Link>
+                            )}
                             <Link href="/bookings" onClick={() => setIsOpen(false)} className="text-lg font-medium text-gray-800 border-b border-gray-100 pb-2">
                                 My Bookings
                             </Link>
@@ -157,11 +163,13 @@ const Navbar = () => {
                         </>
                     ) : (
                         <Link href="/login" onClick={() => setIsOpen(false)}>
-                            <Button className="w-full">Log In</Button>
+                            <Button className="w-full" icon={UserIcon}>Log In</Button>
                         </Link>
                     )}
                 </div>
             )}
+            {/* Cart Drawer */}
+            <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
         </nav>
     );
 };

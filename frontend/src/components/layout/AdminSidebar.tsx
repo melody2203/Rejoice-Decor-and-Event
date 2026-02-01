@@ -52,7 +52,7 @@ export function AdminSidebar() {
                                 className={cn(
                                     "flex items-center gap-4 px-5 py-4 rounded-[1.25rem] transition-all duration-300 relative group overflow-hidden",
                                     isActive
-                                        ? "bg-gold-500 text-burgundy-950 shadow-[0_10px_30px_rgba(212,175,55,0.15)]"
+                                        ? "bg-gold-500 text-gold-950 shadow-[0_10px_30px_rgba(212,175,55,0.15)]"
                                         : "text-zinc-500 hover:text-white"
                                 )}
                             >

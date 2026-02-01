@@ -3,7 +3,7 @@ import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react'
 
 const Footer = () => {
     return (
-        <footer className="bg-burgundy-950 text-white pt-16 pb-8 px-6">
+        <footer className="bg-gold-900 text-white pt-16 pb-8 px-6">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 {/* Brand & Mission */}
                 <div className="md:col-span-1">
@@ -31,10 +31,10 @@ const Footer = () => {
                 <div>
                     <h4 className="text-lg font-serif font-bold mb-6 text-gold-500">Event Types</h4>
                     <ul className="space-y-4 text-sm text-gray-400">
-                        <li><span className="cursor-default">Weddings</span></li>
-                        <li><span className="cursor-default">Birthdays</span></li>
-                        <li><span className="cursor-default">Graduations</span></li>
-                        <li><span className="cursor-default">Engagements</span></li>
+                        <li><Link href="/gallery?category=wedding" className="hover:text-gold-500 transition-colors">Weddings</Link></li>
+                        <li><Link href="/gallery?category=birthday" className="hover:text-gold-500 transition-colors">Birthdays</Link></li>
+                        <li><Link href="/gallery?category=graduation" className="hover:text-gold-500 transition-colors">Graduations</Link></li>
+                        <li><Link href="/gallery?category=engagement" className="hover:text-gold-500 transition-colors">Engagements</Link></li>
                     </ul>
                 </div>
 
@@ -44,11 +44,11 @@ const Footer = () => {
                     <ul className="space-y-4 text-sm text-gray-400">
                         <li className="flex items-center gap-3">
                             <MapPin size={18} className="text-gold-500" />
-                            <span>123 Elegance St, Luxury City</span>
+                            <span>Bole, Addis Ababa, Ethiopia</span>
                         </li>
                         <li className="flex items-center gap-3">
                             <Phone size={18} className="text-gold-500" />
-                            <span>+1 (234) 567-890</span>
+                            <span>+251 945 737 700</span>
                         </li>
                         <li className="flex items-center gap-3">
                             <Mail size={18} className="text-gold-500" />
@@ -56,20 +56,20 @@ const Footer = () => {
                         </li>
                     </ul>
                     <div className="flex gap-4 mt-8">
-                        <Link href="#" className="p-2 bg-burgundy-900 rounded-full hover:bg-gold-500 hover:text-burgundy-950 transition-all">
+                        <Link href="#" className="p-2 bg-gold-800 rounded-full hover:bg-gold-500 hover:text-white transition-all">
                             <Instagram size={20} />
                         </Link>
-                        <Link href="#" className="p-2 bg-burgundy-900 rounded-full hover:bg-gold-500 hover:text-burgundy-950 transition-all">
+                        <Link href="#" className="p-2 bg-gold-800 rounded-full hover:bg-gold-500 hover:text-white transition-all">
                             <Facebook size={20} />
                         </Link>
-                        <Link href="#" className="p-2 bg-burgundy-900 rounded-full hover:bg-gold-500 hover:text-burgundy-950 transition-all">
+                        <Link href="#" className="p-2 bg-gold-800 rounded-full hover:bg-gold-500 hover:text-white transition-all">
                             <Twitter size={20} />
                         </Link>
                     </div>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto pt-8 border-t border-burgundy-900 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+            <div className="max-w-7xl mx-auto pt-8 border-t border-gold-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
                 <p>© 2026 Rejoice Events & Decor. All rights reserved.</p>
                 <div className="flex gap-6">
                     <Link href="/privacy" className="hover:text-gray-300">Privacy Policy</Link>

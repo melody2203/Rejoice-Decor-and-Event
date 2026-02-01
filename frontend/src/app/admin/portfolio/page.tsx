@@ -114,7 +114,7 @@ export default function PortfolioPage() {
                                         <Trash2 size={16} />
                                     </button>
                                 </div>
-                                <div className="absolute bottom-2 left-2 px-2 py-0.5 bg-gold-500 text-burgundy-950 text-[10px] font-bold rounded uppercase tracking-tighter shadow-md">
+                                <div className="absolute bottom-2 left-2 px-2 py-0.5 bg-gold-500 text-gold-950 text-[10px] font-bold rounded uppercase tracking-tighter shadow-md">
                                     {project.category?.name}
                                 </div>
                             </div>

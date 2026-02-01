@@ -41,7 +41,7 @@ export const getInventoryItemById = async (req: Request, res: Response) => {
 
 export const createInventoryItem = async (req: Request, res: Response) => {
     try {
-        const { name, description, totalStock, pricePerDay, categoryId, imageUrl } = req.body;
+        const { name, description, totalStock, pricePerDay, pricePerWeekend, durationNotes, categoryId, imageUrl } = req.body;
 
         const item = await prisma.inventoryItem.create({
             data: {
@@ -49,6 +49,8 @@ export const createInventoryItem = async (req: Request, res: Response) => {
                 description,
                 totalStock: parseInt(totalStock),
                 pricePerDay: parseFloat(pricePerDay),
+                pricePerWeekend: pricePerWeekend ? parseFloat(pricePerWeekend) : undefined,
+                durationNotes,
                 categoryId,
                 imageUrl
             }
@@ -63,7 +65,7 @@ export const createInventoryItem = async (req: Request, res: Response) => {
 export const updateInventoryItem = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { name, description, totalStock, pricePerDay, categoryId, imageUrl } = req.body;
+        const { name, description, totalStock, pricePerDay, pricePerWeekend, durationNotes, categoryId, imageUrl } = req.body;
 
         const item = await prisma.inventoryItem.update({
             where: { id: id as string },
@@ -72,6 +74,8 @@ export const updateInventoryItem = async (req: Request, res: Response) => {
                 description,
                 totalStock: totalStock ? parseInt(totalStock) : undefined,
                 pricePerDay: pricePerDay ? parseFloat(pricePerDay) : undefined,
+                pricePerWeekend: pricePerWeekend ? parseFloat(pricePerWeekend) : undefined,
+                durationNotes,
                 categoryId,
                 imageUrl
             }
@@ -92,5 +96,23 @@ export const deleteInventoryItem = async (req: Request, res: Response) => {
         res.json({ message: 'Inventory item deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to delete inventory item' });
+    }
+};
+
+export const getRentalCategories = async (req: Request, res: Response) => {
+    try {
+        const categories = await prisma.rentalCategory.findMany({
+            include: {
+                _count: {
+                    select: { items: true }
+                }
+            },
+            orderBy: {
+                order: 'asc'
+            }
+        });
+        res.json(categories);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch rental categories' });
     }
 };

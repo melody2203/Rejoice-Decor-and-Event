@@ -32,7 +32,7 @@ export default function MyBookingsPage() {
     if (authLoading || loading) {
         return (
             <div className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-[#FDFBF7]">
-                <div className="text-xl font-serif text-burgundy-900 animate-pulse">Loading your bookings...</div>
+                <div className="text-xl font-serif text-gold-900 animate-pulse">Loading your bookings...</div>
             </div>
         );
     }
@@ -41,7 +41,7 @@ export default function MyBookingsPage() {
         return (
             <div className="pt-32 pb-24 px-6 min-h-screen flex items-center justify-center bg-[#FDFBF7]">
                 <div className="text-center">
-                    <h1 className="text-2xl font-serif font-bold text-burgundy-950 mb-4">Please log in to view bookings</h1>
+                    <h1 className="text-2xl font-serif font-bold text-gold-950 mb-4">Please log in to view bookings</h1>
                     <Link href="/login">
                         <Button variant="gold">Login Now</Button>
                     </Link>
@@ -54,7 +54,7 @@ export default function MyBookingsPage() {
         <div className="pt-32 pb-24 px-6 bg-[#FDFBF7] min-h-screen">
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center justify-between mb-12">
-                    <h1 className="text-4xl font-serif font-bold text-burgundy-950">My Bookings</h1>
+                    <h1 className="text-4xl font-serif font-bold text-gold-950">My Bookings</h1>
                     <Link href="/rentals">
                         <Button variant="outline" size="sm">New Booking</Button>
                     </Link>
@@ -73,8 +73,8 @@ export default function MyBookingsPage() {
                                     <div className="space-y-4">
                                         <div className="flex items-center gap-3">
                                             <span className={`px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${booking.status === 'CONFIRMED' ? 'bg-green-100 text-green-700' :
-                                                    booking.status === 'CANCELLED' ? 'bg-red-100 text-red-700' :
-                                                        'bg-amber-100 text-amber-700'
+                                                booking.status === 'CANCELLED' ? 'bg-red-100 text-red-700' :
+                                                    'bg-amber-100 text-amber-700'
                                                 }`}>
                                                 {booking.status}
                                             </span>
@@ -83,11 +83,11 @@ export default function MyBookingsPage() {
 
                                         <div className="flex items-center gap-8 text-sm">
                                             <div className="flex items-center gap-2 text-gray-600">
-                                                <Calendar size={16} className="text-burgundy-800" />
+                                                <Calendar size={16} className="text-gold-800" />
                                                 <p>{new Date(booking.startDate).toLocaleDateString()} - {new Date(booking.endDate).toLocaleDateString()}</p>
                                             </div>
                                             <div className="flex items-center gap-2 text-gray-600">
-                                                <Package size={16} className="text-burgundy-800" />
+                                                <Package size={16} className="text-gold-800" />
                                                 <p>{booking.items.length} Items</p>
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@ export default function MyBookingsPage() {
                                     </div>
 
                                     <div className="text-right space-y-2 min-w-[120px]">
-                                        <p className="text-2xl font-serif font-bold text-burgundy-950">${parseFloat(booking.totalAmount).toFixed(2)}</p>
+                                        <p className="text-2xl font-serif font-bold text-gold-950">{parseFloat(booking.totalAmount).toLocaleString()} Birr</p>
                                         <p className="text-[10px] uppercase tracking-widest text-gray-400">
                                             {booking.payments.length > 0 ? 'Payment Completed' : 'Payment Pending'}
                                         </p>

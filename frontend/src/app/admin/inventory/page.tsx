@@ -141,7 +141,7 @@ export default function InventoryPage() {
                                         <div className="text-sm text-white font-mono">{item.totalStock}</div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="text-sm text-gold-500 font-bold">${parseFloat(item.pricePerDay).toFixed(2)}</div>
+                                        <div className="text-sm text-gold-500 font-bold">{parseFloat(item.pricePerDay).toLocaleString()} Birr</div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

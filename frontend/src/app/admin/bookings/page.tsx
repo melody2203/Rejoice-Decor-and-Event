@@ -96,7 +96,7 @@ export default function AdminBookingsPage() {
                             <button
                                 key={s}
                                 onClick={() => setFilter(s)}
-                                className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${filter === s ? "bg-gold-500 text-burgundy-950" : "text-zinc-500 hover:text-zinc-300"
+                                className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${filter === s ? "bg-gold-500 text-gold-950" : "text-zinc-500 hover:text-zinc-300"
                                     }`}
                             >
                                 {s}
@@ -151,7 +151,7 @@ export default function AdminBookingsPage() {
                                         </div>
                                     </td>
                                     <td className="px-8 py-5 text-right">
-                                        <span className="text-white font-serif font-bold">${parseFloat(booking.totalAmount).toFixed(2)}</span>
+                                        <span className="text-white font-serif font-bold">{parseFloat(booking.totalAmount).toLocaleString()} Birr</span>
                                     </td>
                                     <td className="px-8 py-5">
                                         <StatusBadge status={booking.status} />
@@ -208,7 +208,7 @@ export default function AdminBookingsPage() {
                                         </div>
                                         <div className="space-y-1">
                                             <p className="text-[10px] font-bold text-gold-500 uppercase tracking-widest">Investment</p>
-                                            <p className="text-2xl font-serif font-bold text-white">${parseFloat(selectedBooking.totalAmount).toFixed(2)}</p>
+                                            <p className="text-2xl font-serif font-bold text-white">{parseFloat(selectedBooking.totalAmount).toLocaleString()} Birr</p>
                                         </div>
                                     </div>
 

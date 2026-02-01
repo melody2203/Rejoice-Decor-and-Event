@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { getInventoryItems, getInventoryItemById, createInventoryItem, updateInventoryItem, deleteInventoryItem } from '../controllers/inventoryController';
+import { getInventoryItems, getInventoryItemById, createInventoryItem, updateInventoryItem, deleteInventoryItem, getRentalCategories } from '../controllers/inventoryController';
 import { authenticateJWT, authorizeAdmin } from '../middleware/authMiddleware';
 
 const router = Router();
 
 router.get('/', getInventoryItems);
+router.get('/categories', getRentalCategories);
 router.get('/:id', getInventoryItemById);
 
 // Admin only routes

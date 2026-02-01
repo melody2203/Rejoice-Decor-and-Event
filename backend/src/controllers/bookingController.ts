@@ -85,11 +85,11 @@ export const createPaymentIntent = async (req: Request, res: Response) => {
 
 export const createBooking = async (req: Request, res: Response) => {
     try {
-        const { startDate, endDate, items } = req.body;
+        const { startDate, endDate, items, eventType, location, decorPackage, customRequest } = req.body;
         const userId = (req as any).user.userId;
 
-        if (!startDate || !endDate || !items || !items.length) {
-            return res.status(400).json({ error: 'Missing booking details' });
+        if (!startDate || !endDate) {
+            return res.status(400).json({ error: 'Missing booking dates' });
         }
 
         const start = new Date(startDate);
@@ -103,45 +103,47 @@ export const createBooking = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'End date must be after start date' });
         }
 
-        // 1. Check availability for all items first
-        for (const item of items) {
-            const availability = await checkItemAvailability(
-                item.itemId,
-                item.quantity,
-                start,
-                end
-            );
+        // 1. Check availability for all items if any
+        if (items && items.length) {
+            for (const item of items) {
+                const availability = await checkItemAvailability(
+                    item.itemId,
+                    item.quantity,
+                    start,
+                    end
+                );
 
-            if (!availability.isAvailable) {
-                return res.status(400).json({
-                    error: `Insufficient stock for item ${item.itemId}. Available: ${availability.availableStock}`
-                });
+                if (!availability.isAvailable) {
+                    return res.status(400).json({
+                        error: `Insufficient stock for item ${item.itemId}. Available: ${availability.availableStock}`
+                    });
+                }
             }
         }
 
-        // 2. Calculate total amount and prepare data
+        // 2. Calculate total amount
         let totalAmount = 0;
         const bookingItemsData = [];
 
-        for (const item of items) {
-            const inventoryItem = await prisma.inventoryItem.findUnique({
-                where: { id: item.itemId }
-            });
+        if (items && items.length) {
+            for (const item of items) {
+                const inventoryItem = await prisma.inventoryItem.findUnique({
+                    where: { id: item.itemId }
+                });
 
-            if (!inventoryItem) {
-                return res.status(404).json({ error: `Item ${item.itemId} not found` });
+                if (!inventoryItem) continue;
+
+                const itemPrice = parseFloat(inventoryItem.pricePerDay.toString());
+                const diffTime = Math.abs(end.getTime() - start.getTime());
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+
+                totalAmount += itemPrice * item.quantity * diffDays;
+
+                bookingItemsData.push({
+                    itemId: item.itemId,
+                    quantity: item.quantity
+                });
             }
-
-            const itemPrice = parseFloat(inventoryItem.pricePerDay.toString());
-            const diffTime = Math.abs(end.getTime() - start.getTime());
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
-
-            totalAmount += itemPrice * item.quantity * diffDays;
-
-            bookingItemsData.push({
-                itemId: item.itemId,
-                quantity: item.quantity
-            });
         }
 
         const booking = await prisma.booking.create({
@@ -151,6 +153,10 @@ export const createBooking = async (req: Request, res: Response) => {
                 endDate: end,
                 totalAmount,
                 status: 'PENDING',
+                eventType,
+                location,
+                decorPackage,
+                customRequest,
                 items: {
                     create: bookingItemsData
                 }
@@ -237,5 +243,40 @@ export const updateBookingStatus = async (req: Request, res: Response) => {
     } catch (error) {
         console.error('Failed to update booking status:', error);
         res.status(500).json({ error: 'Failed to update booking status' });
+    }
+};
+
+export const confirmManualPayment = async (req: Request, res: Response) => {
+    try {
+        const { bookingId, paymentMethod, referenceNumber, amount } = req.body;
+
+        const booking = await prisma.booking.findUnique({
+            where: { id: bookingId }
+        });
+
+        if (!booking) {
+            return res.status(404).json({ error: 'Booking not found' });
+        }
+
+        const result = await prisma.$transaction([
+            prisma.booking.update({
+                where: { id: bookingId },
+                data: { status: 'CONFIRMED' }
+            }),
+            prisma.payment.create({
+                data: {
+                    bookingId,
+                    amount: amount || booking.totalAmount,
+                    status: 'FULL',
+                    paymentMethod,
+                    referenceNumber
+                }
+            })
+        ]);
+
+        res.json({ message: 'Payment confirmed successfully', booking: result[0] });
+    } catch (error) {
+        console.error('Manual payment confirmation error:', error);
+        res.status(500).json({ error: 'Failed to confirm payment' });
     }
 };

@@ -52,7 +52,7 @@ export default function AdminDashboard() {
         fetchStats();
     }, []);
 
-    const COLORS = ['#800020', '#D4AF37', '#000000', '#4A4A4A', '#71717A'];
+    const COLORS = ['#D4AF37', '#956b23', '#3a270f', '#000000', '#71717A'];
 
     if (loading) {
         return (
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <MetricCard
                     title="Total Revenue"
-                    value={`$${stats?.totalRevenue?.toFixed(2) || '0.00'}`}
+                    value={`${stats?.totalRevenue?.toLocaleString() || '0'} Birr`}
                     icon={DollarSign}
                     trend="+12% from last month"
                     color="gold"
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
                     title="Active Bookings"
                     value={stats?.bookingStats?.find((s: any) => s.status === 'CONFIRMED')?._count?.id || '0'}
                     icon={Calendar}
-                    color="burgundy"
+                    color="gold"
                 />
                 <MetricCard
                     title="Top Asset"
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
                                     fontSize={12}
                                     tickLine={false}
                                     axisLine={false}
-                                    tickFormatter={(value) => `$${value}`}
+                                    tickFormatter={(value) => `${value}`}
                                 />
                                 <Tooltip
                                     contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '12px' }}
@@ -224,7 +224,6 @@ export default function AdminDashboard() {
 function MetricCard({ title, value, icon: Icon, trend, color }: any) {
     const colorClasses: any = {
         gold: "text-gold-500 bg-gold-500/10",
-        burgundy: "text-burgundy-500 bg-burgundy-500/10",
         zinc: "text-zinc-400 bg-zinc-400/10",
         amber: "text-amber-500 bg-amber-500/10"
     };

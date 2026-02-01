@@ -74,12 +74,12 @@ function CheckoutContent() {
                     <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8">
                         <Calendar className="text-green-600" size={32} />
                     </div>
-                    <h1 className="text-3xl font-serif font-bold text-burgundy-950 mb-4">Request Sent!</h1>
+                    <h1 className="text-3xl font-serif font-bold text-gold-950 mb-4">Request Sent!</h1>
                     <p className="text-gray-500 mb-10 leading-relaxed">
                         Your selection has been submitted. Our team will review the availability and contact you shortly to finalize the details and payment.
                     </p>
                     <Link href="/bookings">
-                        <Button className="w-full">View My Bookings</Button>
+                        <Button className="w-full" variant="gold">View My Bookings</Button>
                     </Link>
                 </div>
             </div>
@@ -89,7 +89,7 @@ function CheckoutContent() {
     return (
         <div className="pt-32 pb-24 px-6 bg-[#FDFBF7] min-h-screen">
             <div className="max-w-6xl mx-auto">
-                <Link href="/rentals" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-burgundy-700 transition-colors mb-12 group">
+                <Link href="/rentals" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gold-700 transition-colors mb-12 group">
                     <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                     Continue Browsing
                 </Link>
@@ -98,12 +98,12 @@ function CheckoutContent() {
                     {/* Main Info */}
                     <div className="lg:col-span-2 space-y-12">
                         <section>
-                            <h2 className="text-4xl font-serif font-bold text-burgundy-950 mb-8">Booking Details</h2>
+                            <h2 className="text-4xl font-serif font-bold text-gold-950 mb-8">Booking Details</h2>
 
                             <div className="bg-white rounded-[2.5rem] p-10 border border-gray-50 shadow-sm space-y-8">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-burgundy-900 ml-4">Event Start</label>
+                                        <label className="text-xs font-bold uppercase tracking-widest text-gold-900 ml-4">Event Start</label>
                                         <div className="relative">
                                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                             <input
@@ -111,12 +111,12 @@ function CheckoutContent() {
                                                 required
                                                 value={startDate}
                                                 onChange={(e) => setStartDate(e.target.value)}
-                                                className="w-full bg-gray-50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm focus:ring-2 focus:ring-burgundy-800/10 outline-none transition-all"
+                                                className="w-full bg-gray-50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm focus:ring-2 focus:ring-gold-800/10 outline-none transition-all"
                                             />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-burgundy-900 ml-4">Event End</label>
+                                        <label className="text-xs font-bold uppercase tracking-widest text-gold-900 ml-4">Event End</label>
                                         <div className="relative">
                                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                                             <input
@@ -124,14 +124,14 @@ function CheckoutContent() {
                                                 required
                                                 value={endDate}
                                                 onChange={(e) => setEndDate(e.target.value)}
-                                                className="w-full bg-gray-50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm focus:ring-2 focus:ring-burgundy-800/10 outline-none transition-all"
+                                                className="w-full bg-gray-50 border-none rounded-2xl py-4 pl-14 pr-6 text-sm focus:ring-2 focus:ring-gold-800/10 outline-none transition-all"
                                             />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="p-6 bg-burgundy-50/50 rounded-2xl">
-                                    <p className="text-sm text-burgundy-900 italic font-serif">
+                                <div className="p-6 bg-gold-50/50 rounded-2xl">
+                                    <p className="text-sm text-gold-900 italic font-serif">
                                         "Please note that submitting this request does not guarantee availability. Our stylists will reach out within 24 hours."
                                     </p>
                                 </div>
@@ -139,14 +139,14 @@ function CheckoutContent() {
                         </section>
 
                         <section>
-                            <h2 className="text-2xl font-serif font-bold text-burgundy-950 mb-6">Payment Preference</h2>
+                            <h2 className="text-2xl font-serif font-bold text-gold-950 mb-6">Payment Preference</h2>
                             <div className="bg-white rounded-[2.5rem] p-8 border border-gray-50 shadow-sm">
-                                <div className="flex items-center gap-4 p-4 border-2 border-burgundy-800 rounded-2xl bg-burgundy-50/20">
-                                    <div className="w-10 h-10 bg-burgundy-700 text-white rounded-full flex items-center justify-center">
+                                <div className="flex items-center gap-4 p-4 border-2 border-gold-800 rounded-2xl bg-gold-50/20">
+                                    <div className="w-10 h-10 bg-gold-700 text-white rounded-full flex items-center justify-center">
                                         <CreditCard size={20} />
                                     </div>
                                     <div>
-                                        <p className="text-sm font-bold text-burgundy-900">Online Secure Payment</p>
+                                        <p className="text-sm font-bold text-gold-900">Online Secure Payment</p>
                                         <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-none mt-1">Stripe Integration Pending</p>
                                     </div>
                                 </div>
@@ -157,16 +157,16 @@ function CheckoutContent() {
                     {/* Sidebar Summary */}
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-[2.5rem] p-8 border border-gray-50 shadow-xl sticky top-32">
-                            <h3 className="text-xl font-serif font-bold text-burgundy-950 mb-8 border-b border-gray-50 pb-4">Order Summary</h3>
+                            <h3 className="text-xl font-serif font-bold text-gold-950 mb-8 border-b border-gray-50 pb-4">Order Summary</h3>
 
                             <div className="space-y-4 mb-8 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                                 {items.map((item) => (
                                     <div key={item.id} className="flex justify-between items-start text-sm">
                                         <div className="text-gray-600">
-                                            <p className="font-bold text-burgundy-900">{item.name}</p>
+                                            <p className="font-bold text-gold-900">{item.name}</p>
                                             <p className="text-xs">Qty: {item.quantity}</p>
                                         </div>
-                                        <span className="font-bold text-burgundy-950">${item.pricePerDay * item.quantity}</span>
+                                        <span className="font-bold text-gold-950">{item.pricePerDay * item.quantity} Birr</span>
                                     </div>
                                 ))}
                             </div>
@@ -174,11 +174,11 @@ function CheckoutContent() {
                             <div className="space-y-4 border-t border-gray-50 pt-6 mb-8">
                                 <div className="flex justify-between text-sm text-gray-400">
                                     <span>Subtotal</span>
-                                    <span>${total}</span>
+                                    <span>{total} Birr</span>
                                 </div>
-                                <div className="flex justify-between text-lg font-serif font-bold text-burgundy-950">
+                                <div className="flex justify-between text-lg font-serif font-bold text-gold-950">
                                     <span>Total Due</span>
-                                    <span>${total}</span>
+                                    <span>{total} Birr</span>
                                 </div>
                             </div>
 
