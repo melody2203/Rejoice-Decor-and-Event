@@ -534,32 +534,32 @@ async function main() {
 
     const worksData: any = {
         wedding: [
-            { title: 'Gold Theme Wedding', description: 'Grand gold and white wedding decor', imageUrls: ['/images/gallery/wedding/Wedding_1.jpg'], eventDate: new Date('2024-06-12') },
-            { title: 'Romantic Candlelit Ceremony', description: 'Intimate ceremony setup', imageUrls: ['/images/gallery/wedding/wedding_2.jpg'], eventDate: new Date('2024-06-12') },
-            { title: 'Elegant Garden Wedding', description: 'Fresh floral setup for outdoor wedding', imageUrls: ['/images/gallery/wedding/wedding_3.jpg'], eventDate: new Date('2024-07-15') },
-            { title: 'Luxury Pink Floral', description: 'Pink floral theme decoration', imageUrls: ['/images/gallery/wedding/Wedding_4.jpg'], eventDate: new Date('2024-07-15') },
-            { title: 'Classic White Ceremony', description: 'Timeless white silk and rose decor', imageUrls: ['/images/gallery/wedding/wedding_5.jpg'], eventDate: new Date('2024-08-20') },
-            { title: 'Modern Wedding Elegance', description: 'Contemporary wedding styling', imageUrls: ['/images/gallery/wedding/Wedding_6.jpg'], eventDate: new Date('2024-08-20') },
-            { title: 'Luxury Arch Setup', description: 'Premium floral arch for a modern wedding', imageUrls: ['/images/gallery/wedding/Wedding_7.jpg'], eventDate: new Date('2024-09-05') },
-            { title: 'Royal Stage Decor', description: 'Grand stage design for reception', imageUrls: ['/images/gallery/wedding/Wedding_8.jpg'], eventDate: new Date('2024-09-05') }
+            { title: 'Gold Theme Wedding', description: 'Grand gold and white wedding decor', imageUrls: ['/images/gallery/weddings/Wedding_1.jpg'], eventDate: new Date('2024-06-12') },
+            { title: 'Romantic Candlelit Ceremony', description: 'Intimate ceremony setup', imageUrls: ['/images/gallery/weddings/wedding_2.jpg'], eventDate: new Date('2024-06-12') },
+            { title: 'Elegant Garden Wedding', description: 'Fresh floral setup for outdoor wedding', imageUrls: ['/images/gallery/weddings/wedding_3.jpg'], eventDate: new Date('2024-07-15') },
+            { title: 'Luxury Pink Floral', description: 'Pink floral theme decoration', imageUrls: ['/images/gallery/weddings/wedding_4.jpg'], eventDate: new Date('2024-07-15') },
+            { title: 'Classic White Ceremony', description: 'Timeless white silk and rose decor', imageUrls: ['/images/gallery/weddings/wedding_5.jpg'], eventDate: new Date('2024-08-20') },
+            { title: 'Modern Wedding Elegance', description: 'Contemporary wedding styling', imageUrls: ['/images/gallery/weddings/Wedding_6.jpg'], eventDate: new Date('2024-08-20') },
+            { title: 'Luxury Arch Setup', description: 'Premium floral arch for a modern wedding', imageUrls: ['/images/gallery/weddings/Wedding_7.jpg'], eventDate: new Date('2024-09-05') },
+            { title: 'Royal Stage Decor', description: 'Grand stage design for reception', imageUrls: ['/images/gallery/weddings/Wedding_8.jpg'], eventDate: new Date('2024-09-05') }
         ],
         birthday: [
-            { title: 'Fun Birthday Bash', description: 'Colorful and vibrant party decor', imageUrls: ['/images/gallery/birthday/Wedding_1.jpg'], eventDate: new Date('2024-05-10') },
-            { title: 'Birthday Celebration', description: 'Festive setup for birthday event', imageUrls: ['/images/gallery/birthday/Wedding_2.jpg'], eventDate: new Date('2024-05-10') },
-            { title: 'Kids Theme Party', description: 'Playful and safe decoration for children', imageUrls: ['/images/gallery/birthday/Wedding_3.jpg'], eventDate: new Date('2024-08-12') },
-            { title: 'Birthday Table Setup', description: 'Detailed table arrangement', imageUrls: ['/images/gallery/birthday/Wedding_4.jpg'], eventDate: new Date('2024-08-12') }
+            { title: 'Fun Birthday Bash', description: 'Colorful and vibrant party decor', imageUrls: ['/images/gallery/birthdays/Birthday_1.jpg'], eventDate: new Date('2024-05-10') },
+            { title: 'Birthday Celebration', description: 'Festive setup for birthday event', imageUrls: ['/images/gallery/birthdays/Birthday_2.jpg'], eventDate: new Date('2024-05-10') },
+            { title: 'Kids Theme Party', description: 'Playful and safe decoration for children', imageUrls: ['/images/gallery/birthdays/Birthday_3.jpg'], eventDate: new Date('2024-08-12') },
+            { title: 'Birthday Table Setup', description: 'Detailed table arrangement', imageUrls: ['/images/gallery/birthdays/Birthday_4.jpg'], eventDate: new Date('2024-08-12') }
         ],
         engagement: [
-            { title: 'Proposal Surprise', description: 'Intimate and romantic proposal setup', imageUrls: ['/images/gallery/engagement/Engagement_1.jpg'], eventDate: new Date('2024-02-14') },
-            { title: 'Engagement Ring Setting', description: 'Beautiful backdrop for ring exchange', imageUrls: ['/images/gallery/engagement/Engagement_2.jpg'], eventDate: new Date('2024-02-14') },
-            { title: 'Engagement Dinner', description: 'Elegant dining decor for engagement parties', imageUrls: ['/images/gallery/engagement/Engagement_3.jpg'], eventDate: new Date('2024-04-18') },
-            { title: 'Traditional Engagement', description: 'Cultural elements for engagement', imageUrls: ['/images/gallery/engagement/Engagement_4.jpg'], eventDate: new Date('2024-04-18') }
+            { title: 'Proposal Surprise', description: 'Intimate and romantic proposal setup', imageUrls: ['/images/gallery/engagements/Engagement_1.jpg'], eventDate: new Date('2024-02-14') },
+            { title: 'Engagement Ring Setting', description: 'Beautiful backdrop for ring exchange', imageUrls: ['/images/gallery/engagements/Engagement_2.jpg'], eventDate: new Date('2024-02-14') },
+            { title: 'Engagement Dinner', description: 'Elegant dining decor for engagement parties', imageUrls: ['/images/gallery/engagements/Engagement_3.jpg'], eventDate: new Date('2024-04-18') },
+            { title: 'Traditional Engagement', description: 'Cultural elements for engagement', imageUrls: ['/images/gallery/engagements/Engagement_4.jpg'], eventDate: new Date('2024-04-18') }
         ],
         graduation: [
-            { title: 'Graduation Gala', description: 'Celebrating academic milestones in style', imageUrls: ['/images/gallery/graduation/Grad_1.jpg'], eventDate: new Date('2024-07-22') },
-            { title: 'Graduation Stage', description: 'Podium and stage decoration', imageUrls: ['/images/gallery/graduation/Grad_2.jpg'], eventDate: new Date('2024-07-22') },
-            { title: 'Class of 2024 Party', description: 'Modern and energetic graduation decor', imageUrls: ['/images/gallery/graduation/Grad_3.jpg'], eventDate: new Date('2024-11-30') },
-            { title: 'Graduation Photo Booth', description: 'Themed backdrop for photos', imageUrls: ['/images/gallery/graduation/Grad_4.jpg'], eventDate: new Date('2024-11-30') }
+            { title: 'Graduation Gala', description: 'Celebrating academic milestones in style', imageUrls: ['/images/gallery/graduations/Grad_1.jpg'], eventDate: new Date('2024-07-22') },
+            { title: 'Graduation Stage', description: 'Podium and stage decoration', imageUrls: ['/images/gallery/graduations/Grad_2.jpg'], eventDate: new Date('2024-07-22') },
+            { title: 'Class of 2024 Party', description: 'Modern and energetic graduation decor', imageUrls: ['/images/gallery/graduations/Grad_3.jpg'], eventDate: new Date('2024-11-30') },
+            { title: 'Graduation Photo Booth', description: 'Themed backdrop for photos', imageUrls: ['/images/gallery/graduations/Grad_4.jpg'], eventDate: new Date('2024-11-30') }
         ],
         corporate: [
             { title: 'Annual Corporate Gala', description: 'Professional and branded event styling', imageUrls: ['/images/gallery/corporate/Corp_1.jpg'], eventDate: new Date('2024-12-05') },

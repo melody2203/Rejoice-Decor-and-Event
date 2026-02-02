@@ -76,20 +76,6 @@ const GalleryPreview = () => {
             description: 'Royal Wedding Ceremony',
             imageUrls: ['/images/gallery/weddings/Wedding_8.jpg'],
             category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-9',
-            title: 'Wedding',
-            description: 'Garden Wedding Paradise',
-            imageUrls: ['/images/gallery/weddings/Wedding_9.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
-        },
-        {
-            id: 'wedding-10',
-            title: 'Wedding',
-            description: 'Modern Wedding Glamour',
-            imageUrls: ['/images/gallery/weddings/Wedding_10.jpg'],
-            category: { name: 'Wedding', slug: 'wedding' }
         }
     ];
 
@@ -121,27 +107,6 @@ const GalleryPreview = () => {
             title: 'Birthday',
             description: 'Themed Birthday Celebration',
             imageUrls: ['/images/gallery/birthdays/Birthday_4.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-5',
-            title: 'Birthday',
-            description: 'Modern Birthday Style',
-            imageUrls: ['/images/gallery/birthdays/Birthday_5.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-6',
-            title: 'Birthday',
-            description: 'Classic Birthday Decor',
-            imageUrls: ['/images/gallery/birthdays/Birthday_6.jpg'],
-            category: { name: 'Birthday', slug: 'birthday' }
-        },
-        {
-            id: 'birthday-7',
-            title: 'Birthday',
-            description: 'Grand Birthday Celebration',
-            imageUrls: ['/images/gallery/birthdays/Birthday_7.jpg'],
             category: { name: 'Birthday', slug: 'birthday' }
         }
     ];
