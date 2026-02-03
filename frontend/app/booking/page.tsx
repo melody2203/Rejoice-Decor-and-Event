@@ -24,8 +24,7 @@ const BookingPage = () => {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         eventType: '',
-        startDate: '',
-        endDate: '',
+        eventDate: '',
         location: '',
         decorPackage: 'Standard',
         customRequest: '',
@@ -43,7 +42,7 @@ const BookingPage = () => {
     };
 
     const nextStep = () => {
-        if (step === 1 && (!formData.eventType || !formData.startDate || !formData.endDate)) {
+        if (step === 1 && (!formData.eventType || !formData.eventDate)) {
             setError('Please fill in all basic details');
             return;
         }
@@ -69,8 +68,8 @@ const BookingPage = () => {
         try {
             // 1. Create Booking
             const bookingRes = await api.post('/bookings', {
-                startDate: formData.startDate,
-                endDate: formData.endDate,
+                startDate: formData.eventDate,
+                endDate: formData.eventDate,
                 eventType: formData.eventType,
                 location: formData.location,
                 decorPackage: formData.decorPackage,
@@ -184,30 +183,17 @@ const BookingPage = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <label className="text-sm font-bold text-gold-950 uppercase tracking-widest flex items-center gap-2">
-                                                <Clock size={16} className="text-gold-600" /> Event Dates
+                                                <Clock size={16} className="text-gold-600" /> Event Date
                                             </label>
                                             <div className="flex flex-col gap-4 w-full">
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <div className="space-y-1">
-                                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold px-1">Start Date</p>
-                                                        <input
-                                                            type="date"
-                                                            name="startDate"
-                                                            value={formData.startDate}
-                                                            onChange={handleInputChange}
-                                                            className="w-full bg-gray-50 border-none rounded-2xl py-4 px-4 text-xs focus:ring-2 focus:ring-gold-800/10 outline-none"
-                                                        />
-                                                    </div>
-                                                    <div className="space-y-1">
-                                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold px-1">End Date</p>
-                                                        <input
-                                                            type="date"
-                                                            name="endDate"
-                                                            value={formData.endDate}
-                                                            onChange={handleInputChange}
-                                                            className="w-full bg-gray-50 border-none rounded-2xl py-4 px-4 text-xs focus:ring-2 focus:ring-gold-800/10 outline-none"
-                                                        />
-                                                    </div>
+                                                <div className="space-y-1">
+                                                    <input
+                                                        type="date"
+                                                        name="eventDate"
+                                                        value={formData.eventDate}
+                                                        onChange={handleInputChange}
+                                                        className="w-full bg-gray-50 border-none rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-gold-800/10 outline-none"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
