@@ -7,11 +7,11 @@ async function main() {
     try {
         const itemCount = await prisma.inventoryItem.count();
         const catCount = await prisma.rentalCategory.count();
-        const projectCount = await prisma.project.count();
+        const projectCount = await prisma.pastWork.count();
 
         console.log(`Inventory Items: ${itemCount}`);
         console.log(`Rental Categories: ${catCount}`);
-        console.log(`Projects: ${projectCount}`);
+        console.log(`Past Works: ${projectCount}`);
 
         if (itemCount > 0) {
             const firstItem = await prisma.inventoryItem.findFirst();
