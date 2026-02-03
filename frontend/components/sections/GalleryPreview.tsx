@@ -175,6 +175,31 @@ const GalleryPreview = () => {
         }
     ];
 
+    // Hardcoded corporate projects
+    const corporateProjects: Project[] = [
+        {
+            id: 'corp-1',
+            title: 'Corporate',
+            description: 'Grand Opening Event',
+            imageUrls: ['/images/gallery/corporate/Corp_1.jpg'],
+            category: { name: 'Corporate', slug: 'corporate' }
+        },
+        {
+            id: 'corp-2',
+            title: 'Corporate',
+            description: 'Balloon Column Display',
+            imageUrls: ['/images/gallery/corporate/Corp_2.jpg'],
+            category: { name: 'Corporate', slug: 'corporate' }
+        },
+        {
+            id: 'corp-3',
+            title: 'Corporate',
+            description: 'Corporate Celebration',
+            imageUrls: ['/images/gallery/corporate/Corp_3.jpg'],
+            category: { name: 'Corporate', slug: 'corporate' }
+        }
+    ];
+
     useEffect(() => {
         const fetchProjects = async () => {
             try {
@@ -187,8 +212,8 @@ const GalleryPreview = () => {
                     birthdayProjects[0],
                     graduationProjects[0],
                     engagementProjects[0],
-                    weddingProjects[1],
-                    birthdayProjects[1]
+                    corporateProjects[0],
+                    weddingProjects[1]
                 ].filter(Boolean); // Filter out any undefined if arrays are shorter than expected
 
                 setProjects(mixedProjects);
@@ -200,8 +225,8 @@ const GalleryPreview = () => {
                     birthdayProjects[0],
                     graduationProjects[0],
                     engagementProjects[0],
-                    weddingProjects[1],
-                    birthdayProjects[1]
+                    corporateProjects[0],
+                    weddingProjects[1]
                 ].filter(Boolean);
                 setProjects(mixedProjects);
             } finally {
