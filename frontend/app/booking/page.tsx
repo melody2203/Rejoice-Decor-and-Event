@@ -251,7 +251,11 @@ const BookingPage = () => {
                                                         )}
                                                     >
                                                         <p className="font-serif font-bold text-gold-900">{pkg.name}</p>
-                                                        <p className="text-[10px] text-gray-400 mt-1">Starting from {price.toLocaleString()} Birr</p>
+                                                        <p className="text-[10px] text-gray-400 mt-1">
+                                                            {formData.eventType === "Others"
+                                                                ? "will be discussed"
+                                                                : `Starting from ${price.toLocaleString()} Birr`}
+                                                        </p>
                                                     </button>
                                                 );
                                             })}
@@ -284,10 +288,11 @@ const BookingPage = () => {
                                             <span className="text-gold-900 font-bold uppercase tracking-widest text-xs">Prepayment Amount (50%)</span>
                                             <span className="text-2xl font-serif font-bold text-gold-900">
                                                 {(() => {
+                                                    if (formData.eventType === "Others") return "To be discussed";
                                                     const prices = packagePrices[formData.eventType] || packagePrices["Default"];
                                                     const price = prices[formData.decorPackage as keyof typeof prices] || 0;
-                                                    return (price / 2).toLocaleString();
-                                                })()} Birr
+                                                    return (price / 2).toLocaleString() + " Birr";
+                                                })()}
                                             </span>
                                         </div>
                                         <p className="text-xs text-gold-700/60 leading-relaxed italic">
