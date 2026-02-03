@@ -8,9 +8,18 @@ import api from '@/lib/api';
 import Button from '@/components/ui/Button';
 import { Calendar, CreditCard, ChevronLeft, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '@/components/sections/PaymentForm';
+
+const paymentMethods = [
+    { id: 'telebirr', name: 'Telebirr', icon: '📱' },
+    { id: 'cbe_birr', name: 'CBE Birr', icon: '🏦' },
+    { id: 'cbe_transfer', name: 'Commercial Bank of Ethiopia', icon: '💳' },
+    { id: 'awash_bank', name: 'Awash Bank', icon: '🏗️' },
+    { id: 'stripe', name: 'Online (Card/Stripe)', icon: '💳' },
+];
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
@@ -33,12 +42,16 @@ function CheckoutContent() {
     const [error, setError] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
     const [bookingId, setBookingId] = useState<string | null>(null);
+    const [paymentMethod, setPaymentMethod] = useState('');
+    const [referenceNumber, setReferenceNumber] = useState('');
     const [clientSecret, setClientSecret] = useState<string | null>(null);
 
     const handleCreateBooking = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return router.push('/login');
         if (!startDate || !endDate) return setError('Please select event dates');
+        if (!paymentMethod) return setError('Please select a payment method');
+        if (paymentMethod !== 'stripe' && !referenceNumber) return setError('Please enter your payment reference/transaction number');
 
         setIsLoading(true);
         setError('');
@@ -57,9 +70,20 @@ function CheckoutContent() {
             const booking = res.data;
             setBookingId(booking.id);
 
-            // Create Payment Intent
-            const intentRes = await api.post('/bookings/create-intent', { bookingId: booking.id });
-            setClientSecret(intentRes.data.clientSecret);
+            if (paymentMethod === 'stripe') {
+                // Create Payment Intent for Stripe
+                const intentRes = await api.post('/bookings/create-intent', { bookingId: booking.id });
+                setClientSecret(intentRes.data.clientSecret);
+            } else {
+                // Manual Payment Confirmation
+                await api.post('/bookings/confirm-payment', {
+                    bookingId: booking.id,
+                    paymentMethod,
+                    referenceNumber
+                });
+                setIsSuccess(true);
+                clearCart();
+            }
         } catch (err: any) {
             setError(err.response?.data?.error || 'Failed to submit booking request.');
         } finally {
@@ -140,16 +164,53 @@ function CheckoutContent() {
 
                         <section>
                             <h2 className="text-2xl font-serif font-bold text-gold-950 mb-6">Payment Preference</h2>
-                            <div className="bg-white rounded-[2.5rem] p-8 border border-gray-50 shadow-sm">
-                                <div className="flex items-center gap-4 p-4 border-2 border-gold-800 rounded-2xl bg-gold-50/20">
-                                    <div className="w-10 h-10 bg-gold-700 text-white rounded-full flex items-center justify-center">
-                                        <CreditCard size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-bold text-gold-900">Online Secure Payment</p>
-                                        <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-none mt-1">Stripe Integration Pending</p>
-                                    </div>
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {paymentMethods.map(pm => (
+                                        <button
+                                            key={pm.id}
+                                            onClick={() => setPaymentMethod(pm.id)}
+                                            className={cn(
+                                                "p-4 rounded-2xl border-2 transition-all flex items-center gap-4 text-left",
+                                                paymentMethod === pm.id ? "border-gold-500 bg-gold-50" : "border-gray-50 hover:bg-white hover:border-gold-100"
+                                            )}
+                                        >
+                                            <div className={cn(
+                                                "w-10 h-10 rounded-full flex items-center justify-center text-xl",
+                                                paymentMethod === pm.id ? "bg-gold-500 text-white" : "bg-gray-100"
+                                            )}>
+                                                {pm.icon}
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-bold text-gold-900">{pm.name}</p>
+                                                {pm.id === 'stripe' && (
+                                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest leading-none mt-1">International Cards</p>
+                                                )}
+                                            </div>
+                                        </button>
+                                    ))}
                                 </div>
+
+                                {paymentMethod && paymentMethod !== 'stripe' && (
+                                    <div className="space-y-4 bg-white rounded-[2.5rem] p-8 border border-gray-50 shadow-sm animate-in fade-in slide-in-from-top-4">
+                                        <div className="bg-gold-50 p-6 rounded-2xl border border-gold-200">
+                                            <p className="text-xs font-bold text-gold-800 mb-2 uppercase tracking-widest">Payment Instructions</p>
+                                            <p className="text-sm text-gold-950">
+                                                Please transfer the total amount to the selected bank/wallet and enter the transaction reference number below.
+                                            </p>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-xs font-bold text-gray-400 uppercase tracking-widest px-1 ml-4">Reference Number</label>
+                                            <input
+                                                required
+                                                value={referenceNumber}
+                                                onChange={(e) => setReferenceNumber(e.target.value)}
+                                                placeholder="Enter transaction reference number"
+                                                className="w-full bg-gray-50 border-none rounded-2xl py-4 px-6 text-sm focus:ring-2 focus:ring-gold-800/10 outline-none transition-all"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </section>
                     </div>
