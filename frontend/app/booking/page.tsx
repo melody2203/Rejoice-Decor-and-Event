@@ -18,6 +18,12 @@ const paymentMethods = [
     { id: 'awash_bank', name: 'Awash Bank', icon: '🏗️' },
 ];
 
+const decorPackages = [
+    { name: 'Essential', price: 50000 },
+    { name: 'Standard', price: 60000 },
+    { name: 'Premium', price: 70000 },
+];
+
 const BookingPage = () => {
     const { user, loading: authLoading } = useAuth();
     const router = useRouter();
@@ -224,17 +230,17 @@ const BookingPage = () => {
                                     <div className="space-y-4">
                                         <label className="text-sm font-bold text-gold-950 uppercase tracking-widest">Decor Package</label>
                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                            {["Essential", "Standard", "Premium"].map(pkg => (
+                                            {decorPackages.map(pkg => (
                                                 <button
-                                                    key={pkg}
-                                                    onClick={() => setFormData(prev => ({ ...prev, decorPackage: pkg }))}
+                                                    key={pkg.name}
+                                                    onClick={() => setFormData(prev => ({ ...prev, decorPackage: pkg.name }))}
                                                     className={cn(
                                                         "p-6 rounded-[2rem] border-2 transition-all text-center",
-                                                        formData.decorPackage === pkg ? "border-gold-500 bg-gold-50" : "border-gray-100 hover:border-gold-200"
+                                                        formData.decorPackage === pkg.name ? "border-gold-500 bg-gold-50" : "border-gray-100 hover:border-gold-200"
                                                     )}
                                                 >
-                                                    <p className="font-serif font-bold text-gold-900">{pkg}</p>
-                                                    <p className="text-[10px] text-gray-400 mt-1">Starting from 25,000 Birr</p>
+                                                    <p className="font-serif font-bold text-gold-900">{pkg.name}</p>
+                                                    <p className="text-[10px] text-gray-400 mt-1">Starting from {pkg.price.toLocaleString()} Birr</p>
                                                 </button>
                                             ))}
                                         </div>
@@ -264,7 +270,9 @@ const BookingPage = () => {
                                     <div className="bg-gold-50 p-8 rounded-[2.5rem] mb-8">
                                         <div className="flex justify-between items-center mb-4">
                                             <span className="text-gold-900 font-bold uppercase tracking-widest text-xs">Prepayment Amount (50%)</span>
-                                            <span className="text-2xl font-serif font-bold text-gold-900">Custom Birr</span>
+                                            <span className="text-2xl font-serif font-bold text-gold-900">
+                                                {((decorPackages.find(p => p.name === formData.decorPackage)?.price || 0) / 2).toLocaleString()} Birr
+                                            </span>
                                         </div>
                                         <p className="text-xs text-gold-700/60 leading-relaxed italic">
                                             We require a 50% prepayment to secure your event date. The remaining balance can be settled 1 week before the event.
