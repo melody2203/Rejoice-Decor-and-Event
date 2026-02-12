@@ -64,7 +64,7 @@ const AboutPage = () => {
                     </motion.div>
                 </div>
 
-                {/* Why Choose Us */}
+                {/* Why Rejoice */}
                 <section className="text-center mb-20">
                     <h2 className="text-4xl font-serif font-bold text-gold-900 mb-16">Why Rejoice?</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
