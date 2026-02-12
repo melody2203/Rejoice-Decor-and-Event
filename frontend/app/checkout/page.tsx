@@ -75,7 +75,7 @@ function CheckoutContent() {
                 const intentRes = await api.post('/bookings/create-intent', { bookingId: booking.id });
                 setClientSecret(intentRes.data.clientSecret);
             } else {
-                // Manual Payment Confirmation
+                // Manual payment onfirmation
                 await api.post('/bookings/confirm-payment', {
                     bookingId: booking.id,
                     paymentMethod,
